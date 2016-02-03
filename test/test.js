@@ -55,3 +55,8 @@ exports.boardInvalidAreasAreUndefined = function(test) {
   test.deepEqual(board[3][7], undefined);
   test.done();
 }
+
+// exports.pieceCanBePlacedAtValidLocation = function(test) {
+//   var board = logic.generateBoard;
+  
+// }
