@@ -32,3 +32,26 @@ exports.boardIs4by8 = function(test) {
   test.deepEqual(board[0].length, 8);
   test.done();
 }
+
+/***********
+Board should look like this:
+        u**u
+        ***u
+        ****
+        ****
+        ****
+        ****
+        u***
+        u**u
+where u is undefined
+*/
+exports.boardInvalidAreasAreUndefined = function(test) {
+  var board = logic.generateBoard();
+  test.deepEqual(board[0][0], undefined);
+  test.deepEqual(board[0][3], undefined);
+  test.deepEqual(board[1][3], undefined);
+  test.deepEqual(board[0][6], undefined);
+  test.deepEqual(board[0][7], undefined);
+  test.deepEqual(board[3][7], undefined);
+  test.done();
+}
