@@ -65,8 +65,27 @@ exports.pieceCanBePlacedAtValidLocation = function(test) {
 }
 
 exports.pieceCantBePlacedOffBoard = function(test) {
-  var game_state = new GameState;
-  test.throws( function() { game_state.place(10, 10, 'black', 'pusher') },
-               'exception')
+  var gameState = new GameState;
+  test.throws( function() { gameState.place(10, 10, 'black', 'pusher') });
+  test.done();
+}
+
+exports.pieceCantBePlacedAtUndefinedPosition = function(test) {
+  var gameState = new GameState;
+  test.throws( function() { gameState.place(0, 0, 'white', 'pawn') });
+  test.done();
+}
+
+exports.pawnCantBePlacedOnAnotherPiece = function(test) {
+  var gameState = new GameState;
+  gameState.place(2, 2, 'black', 'pawn');
+  test.throws( function() { gameState.place(2, 2, 'white', 'pawn') });
+  test.done();
+}
+
+exports.pusherCantBePlacedOnAnotherPiece = function(test) {
+  var gameState = new GameState;
+  gameState.place(2, 6, 'white', 'pusher');
+  test.throws( function() { gameState.place(2, 6, 'white', 'pusher') });
   test.done();
 }

@@ -24,6 +24,9 @@ generateBoard = function() {
 GameState = function() {
   this.board = generateBoard(),
   this.place = function(x, y, color, piece) {
+    if(this.board[x][y] === undefined ||
+       this.board[x][y].color !== undefined)
+      throw 'invalid board position bitch';
     this.board[x][y] = generateCell(color, piece);
   }
 }
