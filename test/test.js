@@ -56,7 +56,17 @@ exports.boardInvalidAreasAreUndefined = function(test) {
   test.done();
 }
 
-// exports.pieceCanBePlacedAtValidLocation = function(test) {
-//   var board = logic.generateBoard;
-  
-// }
+exports.pieceCanBePlacedAtValidLocation = function(test) {
+  var game_state = new GameState;
+  game_state.place(2, 2, 'black', 'pusher');
+  test.deepEqual(game_state.board[2][2].color, 'black');
+  test.deepEqual(game_state.board[2][2].piece, 'pusher');
+  test.done();
+}
+
+exports.pieceCantBePlacedOffBoard = function(test) {
+  var game_state = new GameState;
+  test.throws( function() { game_state.place(10, 10, 'black', 'pusher') },
+               'exception')
+  test.done();
+}
