@@ -37,8 +37,8 @@ describe('board', function() {
         var board = new Board().create();
 
         expect(board[0][0]).to.equal(null);
-        expect(board[0][3]).to.equal(null);
-        expect(board[1][3]).to.equal(null);
+        expect(board[3][0]).to.equal(null);
+        expect(board[3][1]).to.equal(null);
         expect(board[0][6]).to.equal(null);
         expect(board[0][7]).to.equal(null);
         expect(board[3][7]).to.equal(null);

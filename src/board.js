@@ -11,8 +11,8 @@ Board.prototype.create = function () {
         this.board[i] = new Array();
 
         for (var j = 0; j < 8; j++) {
-            if (i === 0 && j === 0 || i === 0 && j === 3 ||
-                i === 1 && j === 3 || i === 0 && j === 6 ||
+            if (i === 0 && j === 0 || i === 3 && j === 0 ||
+                i === 3 && j === 1 || i === 0 && j === 6 ||
                 i === 0 && j === 7 || i === 3 && j === 7) {
                 this.board[i][j] = null;
             }
