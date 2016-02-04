@@ -102,3 +102,16 @@ exports.blackCanOnlyBePlacedOnTopHalfOfBoard = function(test) {
   test.deepEqual(gameState.board[2][3].piece, 'pawn');
   test.done();
 }
+
+exports.whiteCanOnlyBePlacedOnBottomHalfOfBoard = function(test) {
+  var gameState = new GameState;
+  test.throws( function() { gameState.place(1, 3, 'white', 'pusher') });
+  test.throws( function() { gameState.place(2, 3, 'white', 'pawn') });
+  gameState.place(1, 4, 'white', 'pusher');
+  gameState.place(2, 4, 'white', 'pawn');
+  test.deepEqual(gameState.board[1][4].color, 'white');
+  test.deepEqual(gameState.board[1][4].piece, 'pusher');
+  test.deepEqual(gameState.board[2][4].color, 'white');
+  test.deepEqual(gameState.board[2][4].piece, 'pawn');
+  test.done();
+}

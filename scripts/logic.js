@@ -27,8 +27,8 @@ GameState = function() {
     if(this.board[x][y] === undefined ||
        this.board[x][y].color !== undefined)
       throw 'invalid board position bitch';
-    if(y > 3 && color === 'black')
-      throw 'invalid area of board for black bitch';
+    if((y > 3 && color === 'black') || (y < 4 && color === 'white'))
+      throw 'invalid area of board for placement bitch';
     this.board[x][y] = generateCell(color, piece);
   }
 }
