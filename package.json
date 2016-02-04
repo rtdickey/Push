@@ -11,9 +11,11 @@
     "test": "test"
   },
   "dependencies": {
+    "config": "^1.19.0",
+    "express": "^4.13.4"
   },
   "scripts": {
-    "start": "webpack-dev-server --content-base build/",
+    "start": "node index.js",
     "build": "webpack"
   },
   "devDependencies": {
