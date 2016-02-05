@@ -182,3 +182,32 @@ exports.pusherMovingOnToAnotherPieceCallsPushFunction = function(test) {
   gameState.place(2, 4, 'white', 'pawn');
   gameState.move(3, 4, 2, 4);
 }
+
+exports.pushTranslatesColumnUp = function(test) {
+  var gameState = new GameState;
+  gameState.place(3, 4, 'white', 'pusher');
+  gameState.place(3, 3, 'black', 'pawn');
+  gameState.push(3, 4, 3, 3);
+  test.deepEqual(gameState.board[3][4].color, undefined);
+  test.deepEqual(gameState.board[3][4].piece, undefined);
+  test.deepEqual(gameState.board[3][3].color, 'white');
+  test.deepEqual(gameState.board[3][3].piece, 'pusher');
+  test.deepEqual(gameState.board[3][2].color, 'black');
+  test.deepEqual(gameState.board[3][2].piece, 'pawn');
+  test.done();
+}
+
+exports.pushTranslatesColumnDown = function(test) {
+  var gameState = new GameState;
+  gameState.place(3, 4, 'white', 'pawn');
+  gameState.place(3, 3, 'black', 'pusher');
+  gameState.push(3, 3, 3, 4);
+  test.deepEqual(gameState.board[3][3].color, undefined);
+  test.deepEqual(gameState.board[3][3].piece, undefined);
+  test.deepEqual(gameState.board[3][4].color, 'black');
+  test.deepEqual(gameState.board[3][4].piece, 'pusher');
+  test.deepEqual(gameState.board[3][5].color, 'white');
+  test.deepEqual(gameState.board[3][5].piece, 'pawn');
+  test.done();
+}
+
