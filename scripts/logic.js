@@ -68,7 +68,7 @@ GameState = function() {
         return;
       }
     }
-    throw 'no empty space! invalid push!'
+    throw 'no empty space! invalid push!';
   },
 
   this.translateDown = function(x, y){
@@ -83,6 +83,7 @@ GameState = function() {
         return;
       }
     }
+    throw 'no empty space! invalid push!';
   }
 }
 
