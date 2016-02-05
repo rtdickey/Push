@@ -115,3 +115,70 @@ exports.whiteCanOnlyBePlacedOnBottomHalfOfBoard = function(test) {
   test.deepEqual(gameState.board[2][4].piece, 'pawn');
   test.done();
 }
+
+exports.whiteCanOnlyBePlacedOnBottomHalfOfBoard = function(test) {
+  var gameState = new GameState;
+  test.throws( function() { gameState.place(1, 3, 'white', 'pusher') });
+  test.throws( function() { gameState.place(2, 3, 'white', 'pawn') });
+  gameState.place(1, 4, 'white', 'pusher');
+  gameState.place(2, 4, 'white', 'pawn');
+  test.deepEqual(gameState.board[1][4].color, 'white');
+  test.deepEqual(gameState.board[1][4].piece, 'pusher');
+  test.deepEqual(gameState.board[2][4].color, 'white');
+  test.deepEqual(gameState.board[2][4].piece, 'pawn');
+  test.done();
+}
+
+exports.pawnCanMoveToEmptyPlace = function(test) {
+  var gameState = new GameState;
+  gameState.place(3, 3, 'black', 'pawn');
+  gameState.move(3, 3, 2, 3);
+  test.deepEqual(gameState.board[3][3].color, undefined);
+  test.deepEqual(gameState.board[3][3].piece, undefined);
+  test.deepEqual(gameState.board[2][3].color, 'black');
+  test.deepEqual(gameState.board[2][3].piece, 'pawn');
+  test.done();
+}
+
+exports.pawnCannotMoveOffBoard = function(test) {
+  var gameState = new GameState;
+  gameState.place(3, 3, 'black', 'pawn');
+  test.throws( function() { gameState.move(3, 3, 4, 3) });
+  test.done();
+}
+
+exports.pawnCannotMoveToPositionWhereOtherPieceIs = function(test) {
+  var gameState = new GameState;
+  gameState.place(3, 3, 'black', 'pawn');
+  gameState.place(2, 3, 'black', 'pawn');
+  test.throws( function() { gameState.move(3, 3, 2, 3) });
+  test.done();
+}
+
+exports.pusherCanMoveToEmptyPlace = function(test) {
+  var gameState = new GameState;
+  gameState.place(3, 4, 'white', 'pusher');
+  gameState.move(3, 4, 2, 4);
+  test.deepEqual(gameState.board[3][4].color, undefined);
+  test.deepEqual(gameState.board[3][4].piece, undefined);
+  test.deepEqual(gameState.board[2][4].color, 'white');
+  test.deepEqual(gameState.board[2][4].piece, 'pusher');
+  test.done();
+}
+
+exports.pusherCannotMoveOffBoard = function(test) {
+  var gameState = new GameState;
+  gameState.place(3, 4, 'white', 'pusher');
+  test.throws( function() { gameState.move(3, 4, 4, 4) });
+  test.done();
+}
+
+exports.pusherMovingOnToAnotherPieceCallsPushFunction = function(test) {
+  var gameState = new GameState;
+  gameState.push = function(x_src, y_src, x_dest, y_dest) {
+    test.done();
+  }
+  gameState.place(3, 4, 'white', 'pusher');
+  gameState.place(2, 4, 'white', 'pawn');
+  gameState.move(3, 4, 2, 4);
+}

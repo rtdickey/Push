@@ -1,6 +1,6 @@
 generateCell = function(color, piece) {
   if(color == "undefined" && piece == "undefined")
-    return {color: null, piece: null};
+    return {color: undefined, piece: undefined};
   else
     return {color: color, piece: piece};
 }
@@ -30,6 +30,23 @@ GameState = function() {
     if((y > 3 && color === 'black') || (y < 4 && color === 'white'))
       throw 'invalid area of board for placement bitch';
     this.board[x][y] = generateCell(color, piece);
+  },
+
+  this.move = function(x_src, y_src, x_dest, y_dest) {
+    if(this.board[x_dest][y_dest].color !== undefined){
+      if(this.board[x_src][y_src].piece === 'pusher')
+        this.push(x_src, y_src, x_dest, y_dest);
+      else
+        throw 'piece already here bitch';
+    }
+    this.board[x_dest][y_dest].color = this.board[x_src][y_src].color;
+    this.board[x_dest][y_dest].piece = this.board[x_src][y_src].piece;
+    this.board[x_src][y_src].piece = undefined;
+    this.board[x_src][y_src].color = undefined;
+  },
+
+  this.push = function(x_src, y_src, x_dest, y_dest) {
+    
   }
 }
 
