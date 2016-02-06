@@ -36,13 +36,16 @@ GameState = function() {
 
   this.move = function(x_src, y_src, x_dest, y_dest) {
     if(this.board[x_dest][y_dest].color !== undefined) {
-      if(this.board[x_src][y_src].piece === 'pusher')
+      if(this.board[x_src][y_src].piece === 'pusher'){
         this.push(x_src, y_src, x_dest, y_dest);
+        return
+      }
       else
         throw 'piece already here bitch';
     }
     else if(!this.validPath(x_src, y_src, x_dest, y_dest))
       throw 'no valid path';
+
     this.board[x_dest][y_dest].color = this.board[x_src][y_src].color;
     this.board[x_dest][y_dest].piece = this.board[x_src][y_src].piece;
     this.board[x_src][y_src].piece = undefined;
