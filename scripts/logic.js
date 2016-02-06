@@ -35,8 +35,12 @@ GameState = function() {
   },
 
   this.move = function(x_src, y_src, x_dest, y_dest) {
+    console.log("hurr?");
     if(this.board[x_dest][y_dest].color !== undefined) {
       if(this.board[x_src][y_src].piece === 'pusher'){
+        console.log(this.board[x_src][y_src].locked);
+        if(this.board[x_src][y_src].locked)
+          throw 'cannot move locked piece';
         this.push(x_src, y_src, x_dest, y_dest);
         this.clearLocks();
         this.board[x_dest][y_dest].locked = true;
@@ -45,13 +49,16 @@ GameState = function() {
       else
         throw 'piece already here bitch';
     }
+    else if(this.board[x_src][y_src].locked)
+      throw 'cannot move locked piece';
     else if(!this.validPath(x_src, y_src, x_dest, y_dest))
       throw 'no valid path';
-
-    this.board[x_dest][y_dest].color = this.board[x_src][y_src].color;
-    this.board[x_dest][y_dest].piece = this.board[x_src][y_src].piece;
-    this.board[x_src][y_src].piece = undefined;
-    this.board[x_src][y_src].color = undefined;
+    else {
+      this.board[x_dest][y_dest].color = this.board[x_src][y_src].color;
+      this.board[x_dest][y_dest].piece = this.board[x_src][y_src].piece;
+      this.board[x_src][y_src].piece = undefined;
+      this.board[x_src][y_src].color = undefined;
+    }
   },
 
   this.push = function(x_src, y_src, x_dest, y_dest) {
