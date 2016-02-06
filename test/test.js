@@ -221,8 +221,6 @@ exports.pushTranslatesColumnDown = function(test) {
   test.done();
 }
 
-//tests for pushing into a win condition will go here
-
 exports.pushTranslatesRowLeft = function(test) {
   var gameState = new GameState;
   gameState.place(3, 3, 'black', 'pusher');
@@ -244,3 +242,5 @@ exports.pushTranslatesRowRight = function(test) {
   test.deepEqual(gameState.board[3][2].piece, 'pawn');
   test.done();
 }
+
+//tests for pushing into a win condition next
