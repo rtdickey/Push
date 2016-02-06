@@ -134,6 +134,9 @@ GameState = function() {
         this.board[x][y].piece = undefined;
         return;
       }
+      else if(this.board[i][y].locked) {
+        throw 'invalid push, locked pusher is blocking you';
+      }
     }
     //win condition will go here
     throw 'no empty space! invalid push!';

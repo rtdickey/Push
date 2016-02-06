@@ -298,11 +298,16 @@ exports.pushLeftAgainstLockedPusherThrows = function(test) {
   }
 }
 
-// exports.pushRightAgainstLockedPusherThrows = function(test) {
-//   var gameState = new GameState;
-//   try {
-//   } catch (e) {
-//     test.deepEqual(e, 'invalid push, locked pusher is blocking you');
-//     test.done();
-//   }
-// }
+exports.pushRightAgainstLockedPusherThrows = function(test) {
+  var gameState = new GameState;
+  gameState.place(1, 1, 'black', 'pusher');
+  gameState.place(1, 2, 'black', 'pawn');
+  gameState.move(1, 1, 1, 2);
+  gameState.place(0, 2, 'black', 'pusher');
+  try {
+    gameState.move(0, 2, 1, 2);
+  } catch (e) {
+    test.deepEqual(e, 'invalid push, locked pusher is blocking you');
+    test.done();
+  }
+}
