@@ -275,7 +275,6 @@ exports.lockedPusherCannotMove = function(test) {
   gameState.place(1, 2, 'black', 'pawn');
   gameState.move(1, 1, 1, 2);
   try{
-    console.log(gameState.board[1][2].locked);
     gameState.move(1, 2, 2, 2);
   } catch(e) {
     test.deepEqual(e, 'cannot move locked piece');

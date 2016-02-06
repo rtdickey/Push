@@ -35,10 +35,8 @@ GameState = function() {
   },
 
   this.move = function(x_src, y_src, x_dest, y_dest) {
-    console.log("hurr?");
     if(this.board[x_dest][y_dest].color !== undefined) {
       if(this.board[x_src][y_src].piece === 'pusher'){
-        console.log(this.board[x_src][y_src].locked);
         if(this.board[x_src][y_src].locked)
           throw 'cannot move locked piece';
         this.push(x_src, y_src, x_dest, y_dest);
