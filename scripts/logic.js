@@ -114,7 +114,19 @@ GameState = function() {
   },
 
   this.translateRight = function(x, y) {
-
+    for(var i = x; i < this.boardWidth; i++) {
+      if(this.board[i][y].color === undefined) {
+        for(var j = i; j > 0; j--) {
+          this.board[j][y].color = this.board[j - 1][y].color;
+          this.board[j][y].piece = this.board[j - 1][y].piece;
+        }
+        this.board[x][y].color = undefined;
+        this.board[x][y].piece = undefined;
+        return;
+      }
+    }
+    //win condition will go here
+    throw 'no empty space! invalid push!';
   },
 
   //TODO: Refactor this pile of shit

@@ -234,6 +234,13 @@ exports.pushTranslatesRowLeft = function(test) {
   test.done();
 }
 
-// exports.pushTranslatesRowRight = function(test) {
-//   test.done();
-// }
+exports.pushTranslatesRowRight = function(test) {
+  var gameState = new GameState;
+  gameState.place(1, 2, 'black', 'pusher');
+  gameState.place(2, 2, 'black', 'pawn');
+  gameState.move(1, 2, 2, 2);
+
+  test.deepEqual(gameState.board[2][2].piece, 'pusher');
+  test.deepEqual(gameState.board[3][2].piece, 'pawn');
+  test.done();
+}
