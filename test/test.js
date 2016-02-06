@@ -66,34 +66,57 @@ exports.pieceCanBePlacedAtValidLocation = function(test) {
 
 exports.pieceCantBePlacedOffBoard = function(test) {
   var gameState = new GameState;
-  test.throws( function() { gameState.place(10, 10, 'black', 'pusher') });
-  test.done();
+  try {
+    gameState.place(10, 10, 'black', 'pusher');
+  }catch(e) {
+    test.done();
+  }
 }
 
 exports.pieceCantBePlacedAtUndefinedPosition = function(test) {
   var gameState = new GameState;
-  test.throws( function() { gameState.place(0, 0, 'white', 'pawn') });
-  test.done();
+  try {
+    gameState.place(0, 0, 'white', 'pawn');
+  } catch(e) {
+    test.deepEqual(e, 'invalid board position');
+    test.done();
+  }
 }
 
 exports.pawnCantBePlacedOnAnotherPiece = function(test) {
   var gameState = new GameState;
   gameState.place(2, 2, 'black', 'pawn');
-  test.throws( function() { gameState.place(2, 2, 'white', 'pawn') });
-  test.done();
+  try {
+    gameState.place(2, 2, 'white', 'pawn');
+  } catch(e) {
+    test.deepEqual(e, 'invalid board position');
+    test.done();
+  }
 }
 
 exports.pusherCantBePlacedOnAnotherPiece = function(test) {
   var gameState = new GameState;
   gameState.place(2, 6, 'white', 'pusher');
-  test.throws( function() { gameState.place(2, 6, 'white', 'pusher') });
-  test.done();
+  try { 
+    gameState.place(2, 6, 'white', 'pusher');
+  } catch(e) {
+    test.deepEqual(e, 'invalid board position');
+    test.done();
+  }
 }
 
 exports.blackCanOnlyBePlacedOnTopHalfOfBoard = function(test) {
   var gameState = new GameState;
-  test.throws( function() { gameState.place(1, 4, 'black', 'pusher') });
-  test.throws( function() { gameState.place(2, 4, 'black', 'pawn') });
+  try { 
+    gameState.place(1, 4, 'black', 'pusher');
+  } catch(e) {
+    test.deepEqual(e, 'wrong side of board');
+  }
+  try { 
+    gameState.place(2, 4, 'black', 'pawn');
+  } catch(e) {
+    test.deepEqual(e, 'wrong side of board');
+  }
   gameState.place(1, 3, 'black', 'pusher');
   gameState.place(2, 3, 'black', 'pawn');
   test.deepEqual(gameState.board[1][3].color, 'black');
@@ -105,8 +128,16 @@ exports.blackCanOnlyBePlacedOnTopHalfOfBoard = function(test) {
 
 exports.whiteCanOnlyBePlacedOnBottomHalfOfBoard = function(test) {
   var gameState = new GameState;
-  test.throws( function() { gameState.place(1, 3, 'white', 'pusher') });
-  test.throws( function() { gameState.place(2, 3, 'white', 'pawn') });
+  try { 
+    gameState.place(1, 3, 'white', 'pusher');
+  } catch(e) {
+    test.deepEqual(e, 'wrong side of board');
+  }
+  try { 
+    gameState.place(2, 3, 'white', 'pawn');
+  } catch(e) {
+    test.deepEqual(e, 'wrong side of board');
+  }
   gameState.place(1, 4, 'white', 'pusher');
   gameState.place(2, 4, 'white', 'pawn');
   test.deepEqual(gameState.board[1][4].color, 'white');
@@ -118,8 +149,16 @@ exports.whiteCanOnlyBePlacedOnBottomHalfOfBoard = function(test) {
 
 exports.whiteCanOnlyBePlacedOnBottomHalfOfBoard = function(test) {
   var gameState = new GameState;
-  test.throws( function() { gameState.place(1, 3, 'white', 'pusher') });
-  test.throws( function() { gameState.place(2, 3, 'white', 'pawn') });
+  try { 
+    gameState.place(1, 3, 'white', 'pusher')
+  } catch(e) {
+    test.deepEqual(e, 'wrong side of board');
+  }
+  try { 
+    gameState.place(2, 3, 'white', 'pawn')
+  } catch(e) {
+    test.deepEqual(e, 'wrong side of board');
+  }
   gameState.place(1, 4, 'white', 'pusher');
   gameState.place(2, 4, 'white', 'pawn');
   test.deepEqual(gameState.board[1][4].color, 'white');
@@ -144,16 +183,23 @@ exports.pawnCanMoveToEmptyPlace = function(test) {
 exports.pawnCannotMoveOffBoard = function(test) {
   var gameState = new GameState;
   gameState.place(3, 3, 'black', 'pawn');
-  test.throws( function() { gameState.move(3, 3, 4, 3) });
-  test.done();
+  try { 
+    gameState.move(3, 3, 4, 3)
+  } catch(e) {
+    test.done();
+  }
 }
 
 exports.pawnCannotMoveToPositionWhereOtherPieceIs = function(test) {
   var gameState = new GameState;
   gameState.place(3, 3, 'black', 'pawn');
   gameState.place(2, 3, 'black', 'pawn');
-  test.throws( function() { gameState.move(3, 3, 2, 3) });
-  test.done();
+  try { 
+    gameState.move(3, 3, 2, 3)
+  } catch(e) {
+    test.deepEqual(e, 'piece already here bitch');
+    test.done();
+  }
 }
 
 exports.pawnCannotMoveToEmptyPositionIfThereIsNoPathToDestionation = function(test) {
@@ -161,8 +207,11 @@ exports.pawnCannotMoveToEmptyPositionIfThereIsNoPathToDestionation = function(te
   gameState.place(3, 2, 'black', 'pawn');
   gameState.place(2, 2, 'black', 'pusher');
   gameState.place(3, 3, 'black', 'pawn');
-  test.throws( function() { gameState.move(3, 2, 2, 3) });
-  test.done();
+  try { 
+    gameState.move(3, 2, 2, 3)
+  } catch(e) {
+    test.done();
+  }
 }
 
 exports.pusherCanMoveToEmptyPlace = function(test) {
@@ -179,8 +228,11 @@ exports.pusherCanMoveToEmptyPlace = function(test) {
 exports.pusherCannotMoveOffBoard = function(test) {
   var gameState = new GameState;
   gameState.place(3, 4, 'white', 'pusher');
-  test.throws( function() { gameState.move(3, 4, 4, 4) });
-  test.done();
+  try { 
+    gameState.move(3, 4, 4, 4)
+  } catch(e) {
+    test.done();
+  }
 }
 
 exports.pusherMovingOnToAnotherPieceCallsPushFunction = function(test) {
@@ -339,4 +391,3 @@ exports.pushRightAgainstLockedPusherThrows = function(test) {
     test.done();
   }
 }
-
