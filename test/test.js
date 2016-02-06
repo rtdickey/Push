@@ -254,6 +254,21 @@ exports.pushLocksPusherAfterSuccess = function(test) {
   test.done();
 }
 
+exports.pushLocksPusherAndUnlocksPreviousLockAfterSuccess = function(test) {
+  var gameState = new GameState;
+  gameState.place(1, 1, 'black', 'pusher');
+  gameState.place(1, 2, 'black', 'pawn');
+  gameState.move(1, 1, 1, 2);
+  test.ok(gameState.board[1][2].locked);
+
+  gameState.place(3, 4, 'white', 'pawn');
+  gameState.place(3, 5, 'white', 'pusher');
+  gameState.move(3, 5, 3, 4);
+  test.ok(gameState.board[3][4].locked);
+  test.ok(!gameState.board[1][2].locked);
+  test.done();
+}
+
 exports.pushUpAgainstLockedPusherThrows = function(test) {
   var gameState = new GameState;
   gameState.place(1, 2, 'black', 'pusher');
@@ -311,3 +326,4 @@ exports.pushRightAgainstLockedPusherThrows = function(test) {
     test.done();
   }
 }
+

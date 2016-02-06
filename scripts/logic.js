@@ -38,6 +38,7 @@ GameState = function() {
     if(this.board[x_dest][y_dest].color !== undefined) {
       if(this.board[x_src][y_src].piece === 'pusher'){
         this.push(x_src, y_src, x_dest, y_dest);
+        this.clearLocks();
         this.board[x_dest][y_dest].locked = true;
         return;
       }
@@ -173,6 +174,15 @@ GameState = function() {
       return true; 
     this.board[x_dest][y_dest].partOfPath = false;
     return false;
+  },
+
+  this.clearLocks = function() {
+    for(var i = 0; i < this.boardWidth; i++){
+      for(var j = 0; j < this.boardHeight; j++) {
+        if(this.board[i][j] !== undefined && this.board[i][j].locked)
+          this.board[i][j].locked = false;
+      }
+    }
   }
 }
 
