@@ -223,16 +223,16 @@ exports.pushTranslatesColumnDown = function(test) {
 
 //tests for pushing into a win condition will go here
 
-// exports.pushTranslatesRowLeft = function(test) {
-//   var gameState = new GameState;
-//   gameState.place(3, 3, 'black', 'pusher');
-//   gameState.place(2, 3, 'black', 'pawn');
-//   gameState.move(3, 3, 2, 3);
+exports.pushTranslatesRowLeft = function(test) {
+  var gameState = new GameState;
+  gameState.place(3, 3, 'black', 'pusher');
+  gameState.place(2, 3, 'black', 'pawn');
+  gameState.move(3, 3, 2, 3);
 
-//   test.deepEqual(gameState.board[1][3].piece, 'pawn');
-//   test.deepEqual(gameState.board[2][3].piece, 'pusher');
-//   test.done();
-// }
+  test.deepEqual(gameState.board[1][3].piece, 'pawn');
+  test.deepEqual(gameState.board[2][3].piece, 'pusher');
+  test.done();
+}
 
 // exports.pushTranslatesRowRight = function(test) {
 //   test.done();

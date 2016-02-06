@@ -38,7 +38,7 @@ GameState = function() {
     if(this.board[x_dest][y_dest].color !== undefined) {
       if(this.board[x_src][y_src].piece === 'pusher'){
         this.push(x_src, y_src, x_dest, y_dest);
-        return
+        return;
       }
       else
         throw 'piece already here bitch';
@@ -53,12 +53,16 @@ GameState = function() {
   },
 
   this.push = function(x_src, y_src, x_dest, y_dest) {
-    if(y_dest < y_src) {
+    if(y_dest < y_src)
       this.translateUp(x_src, y_src);
-    } 
-    else if (y_dest > y_src) {
+    else if (y_dest > y_src)
       this.translateDown(x_src, y_src);
-    }
+    else if (x_dest < x_src)
+      this.translateLeft(x_src, y_src);
+    else if (x_dest > x_src) 
+      this.translateRight(x_src, y_src);
+    else
+      throw 'likely an invalid push!';
   },
 
   this.translateUp = function(x, y){
@@ -77,12 +81,12 @@ GameState = function() {
     throw 'no empty space! invalid push!';
   },
 
-  this.translateDown = function(x, y){
+  this.translateDown = function(x, y) {
     for(var i = y; i < this.boardHeight; i++) {
       if(this.board[x][i].color === undefined) {
         for(var j = i; j > y; j--) {
-          this.board[x][j].color = this.board[x][j-1].color;
-          this.board[x][j].piece = this.board[x][j-1].piece;
+          this.board[x][j].color = this.board[x][j - 1].color;
+          this.board[x][j].piece = this.board[x][j - 1].piece;
         }
         this.board[x][y].color = undefined;
         this.board[x][y].piece = undefined;
@@ -92,6 +96,27 @@ GameState = function() {
     //win condition will go here
     throw 'no empty space! invalid push!';
   },
+
+  this.translateLeft = function(x, y) {
+    for(var i = x; i > 0; i--) {
+      if(this.board[i][y].color === undefined) {
+        for(var j = i; j < x; j++) {
+          this.board[j][y].color = this.board[j + 1][y].color;
+          this.board[j][y].piece = this.board[j + 1][y].piece;
+        }
+        this.board[x][y].color = undefined;
+        this.board[x][y].piece = undefined;
+        return;
+      }
+    }
+    //win condition will go here
+    throw 'no empty space! invalid push!';
+  },
+
+  this.translateRight = function(x, y) {
+
+  },
+
   //TODO: Refactor this pile of shit
   this.validPath = function(x_src, y_src, x_dest, y_dest) {
     if(this.board[x_dest][y_dest] === undefined)
