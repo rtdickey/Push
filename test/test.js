@@ -243,4 +243,66 @@ exports.pushTranslatesRowRight = function(test) {
   test.done();
 }
 
-//tests for pushing into a win condition next
+exports.pushLocksPusherAfterSuccess = function(test) {
+  var gameState = new GameState;
+  gameState.place(1, 2, 'black', 'pusher');
+  gameState.place(2, 2, 'black', 'pawn');
+  gameState.move(1, 2, 2, 2);
+
+  test.deepEqual(gameState.board[2][2].piece, 'pusher');
+  test.deepEqual(gameState.board[2][2].locked, true);
+  test.done();
+}
+
+exports.pushUpAgainstLockedPusherThrows = function(test) {
+  var gameState = new GameState;
+  gameState.place(1, 2, 'black', 'pusher');
+  gameState.place(2, 2, 'black', 'pawn');
+  gameState.move(1, 2, 2, 2);
+  gameState.board[2][3].color = 'white';
+  gameState.board[2][3].piece = 'pusher';
+  try {
+    gameState.move(2, 3, 2, 2);
+  } catch (e) {
+    test.deepEqual(e, 'invalid push, locked pusher is blocking you');
+    test.done();
+  }
+}
+
+exports.pushDownAgainstLockedPusherThrows = function(test) {
+  var gameState = new GameState;
+  gameState.place(2, 2, 'black', 'pawn');
+  gameState.place(2, 1, 'black', 'pusher');
+  gameState.move(2, 1, 2, 2);
+  gameState.place(2, 1, 'black', 'pusher');
+
+  try {
+    gameState.move(2, 1, 2, 2);
+  } catch (e) {
+    test.deepEqual(e, 'invalid push, locked pusher is blocking you');
+    test.done();
+  }
+}
+
+exports.pushLeftAgainstLockedPusherThrows = function(test) {
+  var gameState = new GameState;
+  gameState.place(1, 1, 'black', 'pusher');
+  gameState.place(1, 2, 'black', 'pawn');
+  gameState.move(1, 1, 1, 2);
+  gameState.place(2, 2, 'black', 'pusher');
+  try {
+    gameState.move(2, 2, 1, 2);
+  } catch (e) {
+    test.deepEqual(e, 'invalid push, locked pusher is blocking you');
+    test.done();
+  }
+}
+
+// exports.pushRightAgainstLockedPusherThrows = function(test) {
+//   var gameState = new GameState;
+//   try {
+//   } catch (e) {
+//     test.deepEqual(e, 'invalid push, locked pusher is blocking you');
+//     test.done();
+//   }
+// }

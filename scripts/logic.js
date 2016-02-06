@@ -1,8 +1,8 @@
 generateCell = function(color, piece) {
   if(color == "undefined" && piece == "undefined")
-    return {color: undefined, piece: undefined, partOfPath: false};
+    return {color: undefined, piece: undefined, locked: false, partOfPath: false};
   else
-    return {color: color, piece: piece, partOfPath: false};
+    return {color: color, piece: piece, locked: false, partOfPath: false};
 }
 
 generateBoard = function() {
@@ -38,6 +38,7 @@ GameState = function() {
     if(this.board[x_dest][y_dest].color !== undefined) {
       if(this.board[x_src][y_src].piece === 'pusher'){
         this.push(x_src, y_src, x_dest, y_dest);
+        this.board[x_dest][y_dest].locked = true;
         return;
       }
       else
@@ -76,6 +77,9 @@ GameState = function() {
         this.board[x][y].piece = undefined;
         return;
       }
+      else if(this.board[x][i].locked) {
+        throw 'invalid push, locked pusher is blocking you';
+      }
     }
     //win condition will go here
     throw 'no empty space! invalid push!';
@@ -92,13 +96,16 @@ GameState = function() {
         this.board[x][y].piece = undefined;
         return;
       }
+      else if(this.board[x][i].locked) {
+        throw 'invalid push, locked pusher is blocking you';
+      }
     }
     //win condition will go here
     throw 'no empty space! invalid push!';
   },
 
   this.translateLeft = function(x, y) {
-    for(var i = x; i > 0; i--) {
+    for(var i = x; i > -1; i--) {
       if(this.board[i][y].color === undefined) {
         for(var j = i; j < x; j++) {
           this.board[j][y].color = this.board[j + 1][y].color;
@@ -107,6 +114,9 @@ GameState = function() {
         this.board[x][y].color = undefined;
         this.board[x][y].piece = undefined;
         return;
+      }
+      else if(this.board[i][y].locked) {
+        throw 'invalid push, locked pusher is blocking you';
       }
     }
     //win condition will go here
