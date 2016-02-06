@@ -197,6 +197,15 @@ exports.pushTranslatesColumnUp = function(test) {
   test.done();
 }
 
+exports.pushingColumnThatCannotMoveThrows = function(test) {
+  var gameState = new GameState;
+  gameState.place(3, 4, 'white', 'pusher');
+  gameState.place(3, 3, 'black', 'pawn');
+  gameState.place(3, 2, 'black', 'pawn');
+  test.throws( function() { gameState.push(3, 4, 3, 3) });
+  test.done();
+}
+
 exports.pushTranslatesColumnDown = function(test) {
   var gameState = new GameState;
   gameState.place(3, 4, 'white', 'pawn');
@@ -211,3 +220,6 @@ exports.pushTranslatesColumnDown = function(test) {
   test.done();
 }
 
+exports.pushTranslatesRowLeft = function(test) {
+  test.done();
+}

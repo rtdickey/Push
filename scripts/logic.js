@@ -58,8 +58,8 @@ GameState = function() {
 
   this.translateUp = function(x, y){
     for(var i = y; i > 0; i--) {
-      if(this.board[x][i].color === undefined) { //if an empty space exists in the column
-        for(var j = i; j < y; j++){              //translate it up
+      if(this.board[x][i] !== undefined && this.board[x][i].color === undefined) { //if an empty space exists in the column
+        for(var j = i; j < y; j++){                                                //translate it up
           this.board[x][j].color = this.board[x][j+1].color;
           this.board[x][j].piece = this.board[x][j+1].piece;
         }
