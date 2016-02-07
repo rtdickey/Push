@@ -73,7 +73,8 @@ GameState = function() {
   },
 
   this.translateUp = function(x, y){
-    for(var i = y; i > 0; i--) {
+    var i = y;
+    for(i = y; i > 0; i--) {
       if(this.board[x][i] !== undefined && this.board[x][i].color === undefined) { //if an empty space exists in the column
         for(var j = i; j < y; j++){                                                //translate it up
           this.board[x][j].color = this.board[x][j+1].color;
@@ -87,6 +88,11 @@ GameState = function() {
         throw 'invalid push, locked pusher is blocking you';
       }
     }
+    console.log(x + ' ' + i);
+    if(i===1 || i===0 || i===2) {
+      throw this.board[x][i].color + ' wins the game!';
+    }
+
     //win condition will go here
     throw 'no empty space! invalid push!';
   },

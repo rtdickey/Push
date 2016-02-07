@@ -391,3 +391,29 @@ exports.pushRightAgainstLockedPusherThrows = function(test) {
     test.done();
   }
 }
+
+exports.pushingPieceUpOffBoardTriggersWin = function(test) {
+  var gameState = new GameState;
+  gameState.board[1][0] = generateCell('white', 'pawn');
+  gameState.place(1, 1, 'black', 'pusher');
+  try {
+    gameState.move(1, 1, 1, 0);
+  } catch(e) {
+    console.log(e);
+    test.done();
+  }
+
+}
+
+// exports.pushingPieceDownOffBoardTriggersWin = function(test) {
+
+// }
+
+// exports.pushingPieceLeftOffBoardTriggersWin = function(test) {
+
+// }
+
+// exports.pushingPieceRightOffBoardTriggersWin = function(test) {
+
+// }
+
