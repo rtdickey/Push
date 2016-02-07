@@ -88,17 +88,23 @@ GameState = function() {
         throw 'invalid push, locked pusher is blocking you';
       }
     }
-    console.log(x + ' ' + i);
-    if(i===1 || i===0 || i===2) {
-      throw this.board[x][i].color + ' wins the game!';
-    }
 
-    //win condition will go here
+    //win condition
+    if( (x === 0 && i===1) || 
+        (x === 1 && i===0) || 
+        (x === 2 && i===0) ||
+        (x === 3 && i===2) ) {
+      if(this.board[x][y].color !== this.board[x][i].color)
+        throw this.board[x][y].color + ' wins the game!';
+      else
+        throw this.board[x][i].color + ' loses the game!';
+    }
     throw 'no empty space! invalid push!';
   },
 
   this.translateDown = function(x, y) {
-    for(var i = y; i < this.boardHeight; i++) {
+    var i = y;
+    for(i = y; i < this.boardHeight; i++) {
       if(this.board[x][i].color === undefined) {
         for(var j = i; j > y; j--) {
           this.board[x][j].color = this.board[x][j - 1].color;
@@ -112,7 +118,16 @@ GameState = function() {
         throw 'invalid push, locked pusher is blocking you';
       }
     }
-    //win condition will go here
+    //win condition
+    if( (x === 0 && i === 5) ||
+        (x === 1 && i === 7) ||
+        (x === 2 && i === 7) ||
+        (x === 3 && i === 6)) {
+      if(this.board[x][y].color !== this.board[x][i].color)
+        throw this.board[x][y].color + ' wins the game!';
+      else
+        throw this.board[x][i].color + ' loses the game!';
+    }
     throw 'no empty space! invalid push!';
   },
 

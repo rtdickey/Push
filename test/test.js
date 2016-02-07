@@ -399,14 +399,21 @@ exports.pushingPieceUpOffBoardTriggersWin = function(test) {
   try {
     gameState.move(1, 1, 1, 0);
   } catch(e) {
-    console.log(e);
+    test.deepEqual(e, 'black wins the game!');
     test.done();
   }
-
 }
 
 // exports.pushingPieceDownOffBoardTriggersWin = function(test) {
-
+//   var gameState = new GameState;
+//   gameState.board[1][7] = generateCell('black', 'pawn');
+//   gameState.place(1, 6, 'white', 'pusher');
+//   try {
+//     gameState.move(1, 6, 1, 7);
+//   } catch(e) {
+//     test.deepEqual(e, 'white wins the game!');
+//     test.done();
+//   }
 // }
 
 // exports.pushingPieceLeftOffBoardTriggersWin = function(test) {
