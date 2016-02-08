@@ -404,21 +404,30 @@ exports.pushingPieceUpOffBoardTriggersWin = function(test) {
   }
 }
 
-// exports.pushingPieceDownOffBoardTriggersWin = function(test) {
-//   var gameState = new GameState;
-//   gameState.board[1][7] = generateCell('black', 'pawn');
-//   gameState.place(1, 6, 'white', 'pusher');
-//   try {
-//     gameState.move(1, 6, 1, 7);
-//   } catch(e) {
-//     test.deepEqual(e, 'white wins the game!');
-//     test.done();
-//   }
-// }
+exports.pushingPieceDownOffBoardTriggersWin = function(test) {
+  var gameState = new GameState;
+  gameState.board[1][7] = generateCell('black', 'pawn');
+  gameState.place(1, 6, 'white', 'pusher');
+  try {
+    gameState.move(1, 6, 1, 7);
+  } catch(e) {
+    test.deepEqual(e, 'white wins the game!');
+    test.done();
+  }
+}
 
-// exports.pushingPieceLeftOffBoardTriggersWin = function(test) {
+exports.pushingPieceLeftOffBoardTriggersWin = function(test) {
+    var gameState = new GameState;
+    gameState.board[1][6] = generateCell('black', 'pusher');
+    gameState.place(2, 6, 'white', 'pusher');
+    try {
+      gameState.move(2, 6, 1, 6);
+    } catch(e) {
+      test.deepEqual(e, 'white wins the game!');
+      test.done();
+    }
 
-// }
+}
 
 // exports.pushingPieceRightOffBoardTriggersWin = function(test) {
 
