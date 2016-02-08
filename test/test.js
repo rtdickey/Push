@@ -417,19 +417,26 @@ exports.pushingPieceDownOffBoardTriggersWin = function(test) {
 }
 
 exports.pushingPieceLeftOffBoardTriggersWin = function(test) {
-    var gameState = new GameState;
-    gameState.board[1][6] = generateCell('black', 'pusher');
-    gameState.place(2, 6, 'white', 'pusher');
-    try {
-      gameState.move(2, 6, 1, 6);
-    } catch(e) {
-      test.deepEqual(e, 'white wins the game!');
-      test.done();
-    }
-
+  var gameState = new GameState;
+  gameState.board[1][6] = generateCell('black', 'pusher');
+  gameState.place(2, 6, 'white', 'pusher');
+  try {
+    gameState.move(2, 6, 1, 6);
+  } catch(e) {
+    test.deepEqual(e, 'white wins the game!');
+    test.done();
+  }
 }
 
-// exports.pushingPieceRightOffBoardTriggersWin = function(test) {
-
-// }
+exports.pushingPieceRightOffBoardTriggersWin = function(test) {
+  var gameState = new GameState;
+  gameState.board[2][7] = generateCell('black', 'pusher');
+  gameState.place(1, 7, 'white', 'pusher');
+  try {
+    gameState.move(1, 7, 2, 7);
+  } catch(e) {
+    test.deepEqual(e, 'white wins the game!');
+    test.done();
+  }
+}
 

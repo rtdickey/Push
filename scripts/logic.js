@@ -75,8 +75,10 @@ GameState = function() {
   this.translateUp = function(x, y){
     var i = y;
     for(i = y; i > 0; i--) {
-      if(this.board[x][i] !== undefined && this.board[x][i].color === undefined) { //if an empty space exists in the column
-        for(var j = i; j < y; j++){                                                //translate it up
+      if(this.board[x][i] === undefined)
+        break;
+      if(this.board[x][i].color === undefined) { //if an empty space exists in the column
+        for(var j = i; j < y; j++){              //translate it up
           this.board[x][j].color = this.board[x][j+1].color;
           this.board[x][j].piece = this.board[x][j+1].piece;
         }
@@ -84,7 +86,7 @@ GameState = function() {
         this.board[x][y].piece = undefined;
         return;
       }
-      else if(this.board[x][i] !== undefined && this.board[x][i].locked) {
+      if(this.board[x][i].locked) {
         throw 'invalid push, locked pusher is blocking you';
       }
     }
@@ -104,8 +106,10 @@ GameState = function() {
 
   this.translateDown = function(x, y) {
     var i = y;
-    for(i = y; i < this.boardHeight - 1; i++) { //# -1 smelllllllls bad but seems to work
-      if(this.board[x][i] !== undefined && this.board[x][i].color === undefined) {
+    for(i = y; i < this.boardHeight; i++) {
+      if(this.board[x][i] === undefined)
+        break;
+      if(this.board[x][i].color === undefined) {
         for(var j = i; j > y; j--) {
           this.board[x][j].color = this.board[x][j - 1].color;
           this.board[x][j].piece = this.board[x][j - 1].piece;
@@ -114,11 +118,11 @@ GameState = function() {
         this.board[x][y].piece = undefined;
         return;
       }
-      else if(this.board[x][i] !== undefined && this.board[x][i].locked) {
+      if(this.board[x][i].locked) {
         throw 'invalid push, locked pusher is blocking you';
       }
     }
-    //win condition
+    i===8 ? i-- : i //smell
     if( (x === 0 && i === 5) ||
         (x === 1 && i === 7) ||
         (x === 2 && i === 7) ||
@@ -133,7 +137,9 @@ GameState = function() {
 
   this.translateLeft = function(x, y) {
     for(var i = x; i > -1; i--) {
-      if(this.board[i][y] !== undefined && this.board[i][y].color === undefined) {
+      if(this.board[i][y] === undefined)
+        break;
+      if(this.board[i][y].color === undefined) {
         for(var j = i; j < x; j++) {
           this.board[j][y].color = this.board[j + 1][y].color;
           this.board[j][y].piece = this.board[j + 1][y].piece;
@@ -142,25 +148,26 @@ GameState = function() {
         this.board[x][y].piece = undefined;
         return;
       }
-      else if(this.board[i][y] !== undefined && this.board[i][y].locked) {
+      if(this.board[i][y].locked) {
         throw 'invalid push, locked pusher is blocking you';
       }
     }
-    //win condition will go here
-    if((i + 2 === 1 && y === 0) || //more smelly code
-       (i + 2 === 1 && y === 7) ||
-       (i + 2 === 1 && y === 6)) {
-      if(this.board[x][y].color !== this.board[i+2][y].color)
+    if((i === 0 && y === 0) || 
+       (i === 0 && y === 6) ||
+       (i === 0 && y === 7)) {
+      if(this.board[x][y].color !== this.board[i+1][y].color)
         throw this.board[x][y].color + ' wins the game!';
       else
-        throw this.board[i+2][y].color + ' loses the game!';
+        throw this.board[i+1][y].color + ' loses the game!';
     }
     throw 'no empty space! invalid push!';
   },
 
   this.translateRight = function(x, y) {
     for(var i = x; i < this.boardWidth; i++) {
-      if(this.board[i][y] !== undefined && this.board[i][y].color === undefined) {
+      if(this.board[i][y] === undefined)
+        break;
+      if(this.board[i][y].color === undefined) {
         for(var j = i; j > 0; j--) {
           this.board[j][y].color = this.board[j - 1][y].color;
           this.board[j][y].piece = this.board[j - 1][y].piece;
@@ -169,11 +176,18 @@ GameState = function() {
         this.board[x][y].piece = undefined;
         return;
       }
-      else if(this.board[i][y] !== undefined && this.board[i][y].locked) {
+      if(this.board[i][y].locked) {
         throw 'invalid push, locked pusher is blocking you';
       }
     }
-    //win condition will go here
+    if((i === 3 && y === 0) || 
+       (i === 3 && y === 1) ||
+       (i === 3 && y === 7)) {
+      if(this.board[x][y].color !== this.board[i-1][y].color)
+        throw this.board[x][y].color + ' wins the game!';
+      else
+        throw this.board[i-1][y].color + ' loses the game!';
+    }
     throw 'no empty space! invalid push!';
   },
 
