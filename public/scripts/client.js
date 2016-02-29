@@ -22,13 +22,12 @@ var createTable = function(playerSocket){
       document.getElementById('boardArea').appendChild(tr);
     }
 }
-
+var sourceCell = null;
 var dragging = function(data) {
-  coords = data.srcElement.id;
-  console.log("from " + coords);
+  sourceCell = data.srcElement.id;
 }
 
 var dropping = function(data) {
-  coords = data.toElement.id;
-  console.log("to " + coords);
+  toCell = data.toElement.id;
+  console.log("from: " + sourceCell + " to: " + toCell);
 }
