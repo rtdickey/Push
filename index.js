@@ -14,7 +14,7 @@ app.listen(config.port, function() {
 });
 
 app.get('/', function(req, res) {
-	res.sendfile(__dirname + '/index.html');
+	res.sendfile('index.html');
 })
 
 io.on('connection', function (socket) {
